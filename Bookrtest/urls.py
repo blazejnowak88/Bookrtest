@@ -17,10 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from accounts.views import HomeView
+from reviews import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('', HomeView.as_view(), name='home'),
+    path('books/', views.book_list, name='book_list'),
+    path('books/<int:pk>/', views.book_detail, name='book_detail'),
+    path('books/<int:book_pk>/reviews/new/', views.review_edit, name='review_create'),
+    path('book-search/', views.book_search, name='book_search'),
 
 ]

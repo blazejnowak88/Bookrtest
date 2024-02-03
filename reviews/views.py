@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from io import BytesIO
 
-from PIL import Image
+# from PIL import Image
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
@@ -11,7 +11,9 @@ from django.core.files.images import ImageFile
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 
-from .forms import PublisherForm, ReviewForm, SearchForm, BookMediaForm
+from accounts.forms import SearchForm
+from .forms import ReviewForm
+# from .forms import PublisherForm, ReviewForm, SearchForm, BookMediaForm
 from .models import Book, Contributor, Publisher, Review
 from .utils import average_rating
 
@@ -66,7 +68,9 @@ def book_list(request):
 
 
 def book_detail(request, pk):
+    print(pk)
     book = get_object_or_404(Book, pk=pk)
+    print(book)
     reviews = book.review_set.all()
     if reviews:
         book_rating = average_rating([review.rating for review in reviews])

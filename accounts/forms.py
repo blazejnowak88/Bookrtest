@@ -32,3 +32,20 @@ class GroupPermissionAddForm(forms.ModelForm):
         widgets = {
             'permissions': forms.CheckboxSelectMultiple
         }
+
+class SearchForm(forms.Form):
+    search = forms.CharField(required=False, min_length=3)
+    search_in = forms.ChoiceField(required=False,
+                                  choices=(
+                                      ("title", "Title"),
+                                      ("contributor", "Contributor")
+                                  ))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # self.helper = FormHelper()
+        # self.helper.form_method = "get"
+        # self.helper.add_input(Submit("", "Search"))
+
+    def clean_search_in(self):
+        return self.cleaned_data["search_in"] or "title"

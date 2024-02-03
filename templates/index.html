@@ -2,12 +2,7 @@
 
 {% block content %}
 
-    {% if user.is_authenticated %}
-        <p>{{ user.username }}  <a href="{% url 'logout_view' %}">Wyloguj</a> </p>
-
-    {% else  %}
-        <a href="{% url 'login_view' %}">Zaloguj</a>
-    {% endif %}
+  
 
 {%  endblock %}
 
