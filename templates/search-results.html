@@ -2,33 +2,33 @@
 {% load crispy_forms_tags %}
 {% block title %}
     {% if form.is_valid and search_text %}
-        Search Results for "{{ search_text }}"
+        Wyniki wyszukiwania dla "{{ search_text }}"
     {% else %}
-        Book Search
+        Wyszukaj książkę
     {% endif %}
 {% endblock %}
 {% block content %}
-<h2>Search for Books</h2>
+<h2>Wyniki wyszukiwania</h2>
        <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit">
+       <input type="submit" value="Wyszukaj">
     </form>
 
 {% if form.is_valid and search_text %}
-<h3>Search Results for <em>{{ search_text }}</em></h3>
+<h3>Wyniki wyszukiwania <em>{{ search_text }}</em></h3>
 <ul class="list-group">
     {% for book in books %}
     <li class="list-group-item">
-        <span class="text-info">Title: </span> <a href="{% url 'book_detail' book.pk %}">{{ book }}</a>
+        <span class="text-info">Tytuł: </span> <a href="{% url 'book_detail' book.pk %}">{{ book }}</a>
         <br/>
-        <span class="text-info">Contributors: </span>
+        <span class="text-info">Współautorzy: </span>
         {% for contributor in book.contributors.all %}
         {{ contributor.first_names }} {{ contributor.last_names }}{% if not forloop.last %}, {% endif %}
         {% endfor %}
     </li>
     {% empty %}
-    <li class="list-group-item">No results found.</li>
+    <li class="list-group-item">Nie znaleziono danej książki.</li>
     {% endfor %}
 </ul>
 {% endif %}

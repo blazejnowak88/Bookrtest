@@ -163,29 +163,29 @@ def review_edit(request, book_pk, review_pk=None):
                    })
 
 
-@login_required
-def book_media(request, pk):
-    book = get_object_or_404(Book, pk=pk)
-
-    if request.method == "POST":
-        form = BookMediaForm(request.POST, request.FILES, instance=book)
-
-        if form.is_valid():
-            book = form.save(False)
-
-            cover = form.cleaned_data.get("cover")
-            if cover:
-                image = Image.open(cover)
-                image.thumbnail((300, 300))
-                image_data = BytesIO()
-                image.save(fp=image_data, format=cover.image.format)
-                image_file = ImageFile(image_data)
-                book.cover.save(cover.name, image_file)
-            book.save()
-            messages.success(request, "Book \"{}\" was successfully updated.".format(book))
-            return redirect("book_detail", book.pk)
-    else:
-        form = BookMediaForm(instance=book)
-
-    return render(request, "instance-form.html",
-                  {"instance": book, "form": form, "model_type": "Book"})
+# @login_required
+# def book_media(request, pk):
+#     book = get_object_or_404(Book, pk=pk)
+#
+#     if request.method == "POST":
+#         form = BookMediaForm(request.POST, request.FILES, instance=book)
+#
+#         if form.is_valid():
+#             book = form.save(False)
+#
+#             cover = form.cleaned_data.get("cover")
+#             if cover:
+#                 image = Image.open(cover)
+#                 image.thumbnail((300, 300))
+#                 image_data = BytesIO()
+#                 image.save(fp=image_data, format=cover.image.format)
+#                 image_file = ImageFile(image_data)
+#                 book.cover.save(cover.name, image_file)
+#             book.save()
+#             messages.success(request, "Book \"{}\" was successfully updated.".format(book))
+#             return redirect("book_detail", book.pk)
+#     else:
+#         form = BookMediaForm(instance=book)
+#
+#     return render(request, "instance-form.html",
+#                   {"instance": book, "form": form, "model_type": "Book"})
