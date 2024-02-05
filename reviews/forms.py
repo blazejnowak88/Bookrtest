@@ -13,3 +13,13 @@ class ReviewForm(forms.ModelForm):
         exclude = ["date_edited", "book"]
 
     rating = forms.IntegerField(min_value=0, max_value=5)
+
+
+class AddBookForm(forms.ModelForm):
+
+    class Meta:
+        model = Book
+        fields = '__all__'
+        widgets = {
+            'genres': forms.CheckboxSelectMultiple()
+        }

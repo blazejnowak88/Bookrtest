@@ -24,8 +24,12 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('', HomeView.as_view(), name='home'),
     path('books/', views.book_list, name='book_list'),
+    path('add-book/', views.AddBookView.as_view(), name='add_book'),
+
     path('books/<int:pk>/', views.book_detail, name='book_detail'),
     path('books/<int:book_pk>/reviews/new/', views.review_edit, name='review_create'),
     path('book-search/', views.book_search, name='book_search'),
+    path('books/<int:book_pk>/reviews/<int:review_pk>/', views.review_edit, name='review_edit'),
+    # path('books/<int:book_pk>/reviews/<int:review_pk>/', views.ReviewDeleteView.as_view(), name='review_delete'),
 
 ]

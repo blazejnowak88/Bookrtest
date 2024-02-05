@@ -10,11 +10,9 @@
       <br>
       <span class="text-info">Data wydania: </span><span>{{ book.publication_date }}</span>
       <br>
-      {% if not reviews %}
             <hr>
             <h3>Napisz pierwszą recenzję.</h3>
-          <a href="{% url "review_create" book.id %}">Recenzje</a>
-      {% else %}
+          <a href="{% url "review_create" book.id %}">Dodaj Recenzje</a>
             <span class="text-info">Ocena ogólna: </span><span class="badge badge-primary badge-pill">{{ book_rating }}</span>
             <br>
             <hr>
@@ -32,10 +30,14 @@
                         <br>
                         <span class="text-info">Twórca: </span><span>{{ review.creator.username }}</span>
                         <br>
+                      <a href="{% url 'review_edit' book.pk review.pk %}">Edytuj recenzję</a>
+{#                      <a href="{% url 'review_delete' book.pk review.pk %}">Usuń recenzję</a>#}
+
+                    
+
                   </li>
             {% endfor %}
             </ul>
-      {% endif %}
 {% endblock %}
 
 {#{% extends 'base.html' %}#}

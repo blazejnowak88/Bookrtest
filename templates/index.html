@@ -19,14 +19,18 @@
   </ul>
   {% endif %}
   <h4>Bieżące recenzje</h4>
+   <a href="/books/{{ book.id }}">" <img src="static/images/architects-of-intelligence-the-truth-about-ai-from-the-people-building-it-b-iext116222238.webp"> 
+    <img src="static/images/pol_pl_Advanced-Deep-Learning-with-TensorFlow-2-and-Keras-Second-Edition-Atienza-Rowel-1319693_1.webp">
+    <img src="static/images/pol_pl_Hands-On-Machine-Learning-for-Algorithmic-Trading-Stefan-Jansen-610668_1.webp">
+
+
   <div id="recent_reviews"></div>
   <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
   <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
   <script src="{% static 'recent-reviews.js' %}" type="text/babel"></script>
   <script type="text/babel">
-    {#ReactDOM.render(<RecentReviews url="{% url 'api:review-list' %}?limit=6" />,#}
-    {#    document.getElementById('recent_reviews')#}
-    {#);#}
+
+   
   </script>
 {% endblock %}

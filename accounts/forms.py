@@ -9,11 +9,13 @@ class LoginForm(forms.Form):
 
 
 class RegisterForm(forms.ModelForm):
+    email = forms.EmailField(max_length=50)
     password = forms.CharField(max_length=50, widget=forms.PasswordInput)
     re_password = forms.CharField(max_length=50, widget=forms.PasswordInput)
+
     class Meta:
         model = User
-        fields = ['username',]
+        fields = ['username', ]
 
     def clean(self):
         cleaned_data = super().clean()
@@ -25,13 +27,13 @@ class RegisterForm(forms.ModelForm):
 
 
 class GroupPermissionAddForm(forms.ModelForm):
-
     class Meta:
         model = Group
         fields = ('name', 'permissions')
         widgets = {
             'permissions': forms.CheckboxSelectMultiple
         }
+
 
 class SearchForm(forms.Form):
     search = forms.CharField(required=False, min_length=3)

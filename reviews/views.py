@@ -9,10 +9,12 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
 from django.core.files.images import ImageFile
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.utils import timezone
+from django.views.generic import CreateView
 
 from accounts.forms import SearchForm
-from .forms import ReviewForm
+from .forms import ReviewForm, AddBookForm
 # from .forms import PublisherForm, ReviewForm, SearchForm, BookMediaForm
 from .models import Book, Contributor, Publisher, Review
 from .utils import average_rating
@@ -133,7 +135,7 @@ def review_edit(request, book_pk, review_pk=None):
         review = get_object_or_404(Review, book_id=book_pk, pk=review_pk)
         user = request.user
         if not user.is_staff and review.creator.id != user.id:
-            raise PermissionDenied
+            return render(request, "komunikat.html")
     else:
         review = None
 
@@ -143,10 +145,10 @@ def review_edit(request, book_pk, review_pk=None):
             updated_review = form.save(False)
             updated_review.book = book
             if review is None:
-                messages.success(request, "Review for \"{}\" created.".format(book))
+                messages.success(request, "Recenzja \"{}\" dodana.".format(book))
             else:
                 updated_review.date_edited = timezone.now()
-                messages.success(request, "Review for \"{}\" updated.".format(book))
+                messages.success(request, "Recenzja dla  \"{}\" zauktualizowana.".format(book))
 
             updated_review.save()
 
@@ -162,6 +164,35 @@ def review_edit(request, book_pk, review_pk=None):
                    "related_model_type": "Book"
                    })
 
+
+# def review_delete(request, review_id):
+#     review = get_object_or_404(Review, id=review_id)
+#
+#     if request.user == review.user:
+#         review.delete()
+#         return redirect("book_detail", book.pk)
+#     else:
+#         # Dodaj odpowiednią obsługę błędu, jeśli użytkownik nie jest autorem recenzji
+#         return render(request, 'blad_usuwania_recenzji.html')
+#
+# class ReviewDeleteView(View):
+#     def get(self, request, review_id):
+#         review = Review.objects.get(pk=review_id)
+#         review.delete()
+#         messages.add_message(request, messages.INFO, "Recenzja usunięta")
+#         return redirect('book_detail"')
+
+
+class AddBookView(CreateView):
+    model = Book
+    form_class = AddBookForm
+    template_name = 'add_book.html'
+
+    success_url = reverse_lazy('book_list')
+
+    def form_valid(self, form):
+        messages.success(self.request, f"Dodano książkę{form.instance.title}")
+        return super(AddBookView, self).form_valid(form)
 
 # @login_required
 # def book_media(request, pk):

@@ -15,10 +15,12 @@
       <li>Last Login: {{ user.last_login }}</li>
       <li>Groups: {{ groups }}{% if not groups %}None{% endif %} </li>
   </ul>
-  {% book_list user.username %}
-  {% autoescape off %}
-      {{ books_read_plot }}
-  {% endautoescape %}
+{#  {% book_list user.username %}#}
+ 
+    Przeczytano książki :
+       {% for book in books  %} 
+           <p> {{ book.title }}</p>
+        {%  endfor %}
 
 {% endblock %}
 
