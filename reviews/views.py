@@ -165,22 +165,17 @@ def review_edit(request, book_pk, review_pk=None):
                    })
 
 
-# def review_delete(request, review_id):
-#     review = get_object_or_404(Review, id=review_id)
-#
-#     if request.user == review.user:
-#         review.delete()
-#         return redirect("book_detail", book.pk)
-#     else:
-#         # Dodaj odpowiednią obsługę błędu, jeśli użytkownik nie jest autorem recenzji
-#         return render(request, 'blad_usuwania_recenzji.html')
-#
-# class ReviewDeleteView(View):
-#     def get(self, request, review_id):
-#         review = Review.objects.get(pk=review_id)
-#         review.delete()
-#         messages.add_message(request, messages.INFO, "Recenzja usunięta")
-#         return redirect('book_detail"')
+def review_delete(request, book_pk, review_pk):
+    review = get_object_or_404(Review, id=review_pk)
+    book_id = review.book_id
+    if request.user == review.creator:
+        review.delete()
+        return redirect("book_detail", book_id)
+    else:
+        # Dodaj odpowiednią obsługę błędu, jeśli użytkownik nie jest autorem recenzji
+        return render(request, 'blad_usuwania_recenzji.html')
+
+
 
 
 class AddBookView(CreateView):

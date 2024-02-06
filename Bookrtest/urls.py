@@ -30,6 +30,6 @@ urlpatterns = [
     path('books/<int:book_pk>/reviews/new/', views.review_edit, name='review_create'),
     path('book-search/', views.book_search, name='book_search'),
     path('books/<int:book_pk>/reviews/<int:review_pk>/', views.review_edit, name='review_edit'),
-    # path('books/<int:book_pk>/reviews/<int:review_pk>/', views.ReviewDeleteView.as_view(), name='review_delete'),
+    path('books/<int:book_pk>/reviews/delete/<int:review_pk>/', views.review_delete, name='review_delete'),
 
 ]

@@ -63,6 +63,4 @@ class Review(models.Model):
                                        help_text="Data i czas ostatniej edycji recenzji.")
     creator = models.ForeignKey(auth.get_user_model(), on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE,
-                             help_text="Recenzowana książka."),
-    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE, default=1)
-
+                             help_text="Recenzowana książka.")
